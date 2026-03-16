@@ -3,9 +3,13 @@ import urlModel from '../models/shortUrl.model.js';
 
 export const createShortUrl = async (req, res) => {
 
-    const { url } = req.body;
-    const shortId = await shortUrlServiceNoUser(url)
-    res.send(process.env.APP_URL + "/" + shortId)
+    try {
+        const { url } = req.body;
+        const shortId = await shortUrlServiceNoUser(url)
+        res.send(process.env.APP_URL + "/" + shortId)
+    } catch (error) {
+        next(error)
+    }
 }
 
 export const redirectFromShorturl = async (req, res) => {
@@ -17,6 +21,7 @@ export const redirectFromShorturl = async (req, res) => {
     }
     else {
         res.status(404).send('NOT FOUND')
+        console.log('url not found')
     }
 }
 
