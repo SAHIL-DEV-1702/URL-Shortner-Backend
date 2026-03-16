@@ -11,7 +11,6 @@ const connectDb = () => {
         process.exit(1);
     }
 
-
 }
 
 export default connectDb;

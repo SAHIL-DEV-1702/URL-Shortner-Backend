@@ -1,14 +1,15 @@
-import urlSchema from '../models/shortUrl.model.js'
+import urlModel from '../models/shortUrl.model.js'
 
-export const saveShortUrl = async (shortUrl, orignalUrl, userId) => {
-    const newUrl = new urlSchema(
+export const saveShortUrl = async (short_url, originalUrl, userId) => {
+    const newUrl = new urlModel(
         {
-            orignal_Url: orignalUrl,
-            short_Url: shortUrl,
+            short_url: short_url,
+            originalUrl: originalUrl,
+
         }
     )
     if (userId) {
         newUrl.user_id = userId
     }
-    newUrl.save
+    newUrl.save()
 }

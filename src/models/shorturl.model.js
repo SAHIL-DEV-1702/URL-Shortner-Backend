@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 const urlSchema = new mongoose.Schema(
     {
-        orignalUrl: {
+        originalUrl: {
             type: String,
             require: true
         },
@@ -17,7 +17,7 @@ const urlSchema = new mongoose.Schema(
             requied: true,
             default: 0
         },
-        users: {
+        user: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
 

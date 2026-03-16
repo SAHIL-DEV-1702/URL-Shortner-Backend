@@ -1,4 +1,4 @@
-import { Modal } from '@mui/material'
+
 import mongoose from 'mongoose'
 
 const userSchema = new mongoose.Schema(
@@ -9,7 +9,6 @@ const userSchema = new mongoose.Schema(
         },
         contactNo: {
             type: Number,
-
         },
         username: {
             type: String,

@@ -13,6 +13,6 @@ export const shortUrlServiceNoUser = async (url) => {
 export const shortUrlServiceUser = async (url, userId) => {
 
     const shortUrl = await genrateId(7)
-    await saveShortUrl(shortUrl, url, useId)
+    await saveShortUrl(shortUrl, url, userId)
     return shortUrl
 }
