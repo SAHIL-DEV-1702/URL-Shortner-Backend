@@ -1,4 +1,4 @@
-import { saveShortUrl } from "../dao/shortUrl.js"
+import { getCustomShorturl, saveShortUrl } from "../dao/shortUrl.js"
 import { genrateId } from "../utils/helper.js"
 
 
@@ -13,13 +13,19 @@ export const shortUrlServiceNoUser = async (url) => {
     }
 }
 
-
-export const shortUrlServiceUser = async (url, userId) => {
+export const shortUrlServiceUser = async (url, userId, slug = null) => {
     try {
-        const shortUrl = await genrateId(7)
+        const shortUrl =  slug || genrateId(7)
+
+        const exists = await getCustomShorturl(slug)
+        if (exists) throw new Error("this custom url already exists")
+
         await saveShortUrl(shortUrl, url, userId)
         return shortUrl
+
     } catch (error) {
         throw new Error(`Error in shortUrlServiceUser: ${error.message}`)
     }
 }
+
+

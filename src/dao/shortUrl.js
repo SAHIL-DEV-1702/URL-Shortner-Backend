@@ -16,3 +16,8 @@ export const saveShortUrl = async (short_url, originalUrl, userId) => {
         throw error;
     }
 }
+
+export const getCustomShorturl = async (slug) => {
+    return await urlSchema.findOne({ short_url: slug })
+
+}

@@ -1,4 +1,4 @@
-import { shortUrlServiceNoUser } from '../sevices/shortUrl.service.js'
+import { shortUrlServiceNoUser, shortUrlServiceUser } from '../sevices/shortUrl.service.js'
 import urlModel from '../models/shortUrl.model.js';
 
 export const createShortUrl = async (req, res) => {
@@ -7,6 +7,19 @@ export const createShortUrl = async (req, res) => {
         const { url } = req.body;
         const shortId = await shortUrlServiceNoUser(url)
         res.send(process.env.APP_URL + "/" + shortId)
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const createShortUrlAuth = async (req, res) => {
+
+    try {
+        const { url } = req.body;
+        const shortUrl = await shortUrlServiceUser(url, req.user._id)
+        res.send(process.env.APP_URL + "/" + shortId)
+
     } catch (error) {
         next(error)
     }
@@ -25,12 +38,17 @@ export const redirectFromShorturl = async (req, res) => {
     }
 }
 
-
 export const createCustomUrl = async (req, res) => {
 
     const { url, slug } = req.body
-    const shortUrl = await createShortUrlWithoutUser(url, slug)
+    const shortUrl = await shortUrlServiceNoUser(url, slug)
 
     res.status(200).json({ shortUrl: process.env.APP_URL + shortUrl })
 
 }
+
+
+
+
+
+
