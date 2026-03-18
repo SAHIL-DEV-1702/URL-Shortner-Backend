@@ -25,3 +25,12 @@ export const redirectFromShorturl = async (req, res) => {
     }
 }
 
+
+export const createCustomUrl = async (req, res) => {
+
+    const { url, slug } = req.body
+    const shortUrl = await createShortUrlWithoutUser(url, slug)
+
+    res.status(200).json({ shortUrl: process.env.APP_URL + shortUrl })
+
+}
