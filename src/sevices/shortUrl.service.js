@@ -2,9 +2,10 @@ import { getCustomShorturl, saveShortUrl } from "../dao/shortUrl.js"
 import { genrateId } from "../utils/helper.js"
 
 
+
 export const shortUrlServiceNoUser = async (url) => {
     try {
-        const shortUrl = await genrateId(7)
+        const shortUrl = genrateId(7)
         if (!shortUrl) throw new Error("Short Url Not Generated")
         await saveShortUrl(shortUrl, url)
         return shortUrl

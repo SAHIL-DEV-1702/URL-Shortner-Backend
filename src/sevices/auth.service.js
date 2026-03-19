@@ -21,5 +21,5 @@ export const loginUser = async (email, password) => {
     if (!user || user.password !== password) throw new Error("invalid credentials")
 
     const token = await signToken({ id: user._id })
-    return token
+    return { user, token }
 }

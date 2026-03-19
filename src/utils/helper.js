@@ -11,10 +11,12 @@ export const signToken = (payload) => {
     return jsonwebtoken.sign(payload, process.env.JWT_SECRET, { expiresIn: '5m' })
 }
 
-export const verifyToken = () => {
-
-    const decoded = jsonwebtoken.verify(payload, process.env.JWT_SECRET,)
-    console.log(decoded.id)
-    return decoded.id
-
+export const verifyToken = (token) => {
+    try {
+        const decoded = jsonwebtoken.verify(token, process.env.JWT_SECRET)
+        return decoded.id
+    } catch (err) {
+        console.log("Token error:", err.message)
+        return null
+    }
 }

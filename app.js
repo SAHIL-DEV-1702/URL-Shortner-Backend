@@ -11,11 +11,14 @@ import shortUrl from './src/routes/shortUrl.routes.js'
 import auth_routes from './src/routes/auth.routes.js'
 import { redirectFromShorturl } from './src/controller/shortUrl.controller.js';
 import { errorHandler } from './src/utils/errorHandler.js';
+import { attachedUser } from './src/utils/attach.user.js';
+import cookieParser from 'cookie-parser'
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(errorHandler)
-
+app.use(cookieParser())
+app.use(attachedUser)
 app.use('/api/create', shortUrl)
 app.use('/api/auth', auth_routes)
 

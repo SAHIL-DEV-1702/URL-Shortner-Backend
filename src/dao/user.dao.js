@@ -2,12 +2,12 @@ import user from '../models/user.model.js'
 
 export const findByEmail = async (email) => {
 
-   return  await user.findOne({email});
+   return await user.findOne({ email });
 
 }
 
 
-export const findById = async (email) => {
+export const findById = async (id) => {
 
    return await user.findOne(id);
 
@@ -15,7 +15,7 @@ export const findById = async (email) => {
 
 export const createUser = async (name, email, password) => {
 
-    const newUser = await user.create({ name: name, email: email, password: password })
-    return newUser
+   const newUser = await user.create({ name: name, email: email, password: password })
+   return newUser
 
 }

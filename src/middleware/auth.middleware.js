@@ -1,6 +1,5 @@
 import { verifyToken } from '../utils/helper';
 
-const jwt = require('jsonwebtoken');
 
 export const authMiddleware = async (req, res, next) => {
     try {
@@ -13,7 +12,7 @@ export const authMiddleware = async (req, res, next) => {
         const decoded = verifyToken(token,);
         const user = await findUserById(decoded)
 
-          if (!user) return res.send(401).json({ message: "Unauthorized" })
+        if (!user) return res.send(401).json({ message: "Unauthorized" })
 
         req.user = user;
         next();

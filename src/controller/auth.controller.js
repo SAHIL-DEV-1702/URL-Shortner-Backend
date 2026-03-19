@@ -3,14 +3,15 @@ import { findByEmail } from "../dao/user.dao.js";
 import { registerUser, loginUser } from "../sevices/auth.service.js";
 import { signToken } from "../utils/helper.js";
 
+
 export const register_user = async (req, res) => {
     try {
         const { name, email, password } = req.body
 
-        const token = await registerUser(name, email, password)
+        const { token, user } = await registerUser(name, email, password)
         req.user = user
-        res.cookie("accesstoken", token, cookiesOption)
-        res.status(200).json({ message: "login success" })
+        res.cookie("accessToken", token, cookiesOption)
+        res.status(200).json({ message: "registered success" })
 
     } catch (err) {
         console.log(err)
@@ -22,13 +23,15 @@ export const login_user = async (req, res) => {
 
     const { email, password } = req.body
 
-    const token = await loginUser(email, password)
+    const { user, token } = await loginUser(email, password)
 
     if (!token) {
         return res.status(401).json({ message: "User not registered or invalid credentials" })
     }
+    console.log(user, "user print ")
     req.user = user
-    res.cookie("accesstoken", token, cookiesOption)
+
+    res.cookie("accessToken", token, cookiesOption)
 
     res.status(200).json({ message: "login success" })
 

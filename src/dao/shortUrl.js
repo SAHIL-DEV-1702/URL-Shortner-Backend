@@ -6,11 +6,13 @@ export const saveShortUrl = async (short_url, originalUrl, userId) => {
             short_url: short_url,
             originalUrl: originalUrl,
         });
+
         if (userId) {
-            newUrl.user_id = userId;
+            newUrl.user = userId;
         }
         const savedUrl = await newUrl.save();
         return savedUrl;
+
     } catch (error) {
         console.error('Error saving short URL:', error);
         throw error;
@@ -18,6 +20,6 @@ export const saveShortUrl = async (short_url, originalUrl, userId) => {
 }
 
 export const getCustomShorturl = async (slug) => {
-    return await urlSchema.findOne({ short_url: slug })
+    return await urlModel.findOne({ short_url: slug })
 
 }

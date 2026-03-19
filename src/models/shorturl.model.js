@@ -4,17 +4,17 @@ const urlSchema = new mongoose.Schema(
     {
         originalUrl: {
             type: String,
-            require: true
+            required: true
         },
         short_url: {
             type: String,
-            requied: true,
+            required: true,
             index: true,
-            unique:true
+            unique: true
         },
         clicks: {
             type: Number,
-            requied: true,
+            required: true,
             default: 0
         },
         user: {
