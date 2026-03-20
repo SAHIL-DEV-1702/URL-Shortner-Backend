@@ -8,7 +8,7 @@ export const genrateId = (length) => {
 }
 
 export const signToken = (payload) => {
-    return jsonwebtoken.sign(payload, process.env.JWT_SECRET, { expiresIn: '5m' })
+    return jsonwebtoken.sign(payload, process.env.JWT_SECRET, { expiresIn: '30m' })
 }
 
 export const verifyToken = (token) => {

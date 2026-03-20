@@ -16,8 +16,8 @@ export const shortUrlServiceNoUser = async (url) => {
 
 export const shortUrlServiceUser = async (url, userId, slug = null) => {
     try {
-        const shortUrl =  slug || genrateId(7)
-
+        const shortUrl = slug || genrateId(7)
+        console.log('short', shortUrl)
         const exists = await getCustomShorturl(slug)
         if (exists) throw new Error("this custom url already exists")
 

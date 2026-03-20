@@ -10,8 +10,8 @@ export const saveShortUrl = async (short_url, originalUrl, userId) => {
         if (userId) {
             newUrl.user = userId;
         }
-        const savedUrl = await newUrl.save();
-        return savedUrl;
+        await newUrl.save();
+
 
     } catch (error) {
         console.error('Error saving short URL:', error);

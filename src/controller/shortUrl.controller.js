@@ -4,15 +4,18 @@ import urlModel from '../models/shortUrl.model.js';
 
 export const createShortUrl = async (req, res) => {
 
-    const { url } = req.body;
+    const data = req.body;
+
+    console.log(data)
+
     let shortUrl
     if (req.user) {
-        shortUrl = await shortUrlServiceUser(url, req.user._id)
+        shortUrl = await shortUrlServiceUser(data.url, req.user._id, data.slug)
     }
     else {
-        shortUrl = await shortUrlServiceNoUser(url)
+        shortUrl = await shortUrlServiceNoUser(data.url)
     }
-    res.status(200).json({ shortUrl: process.env.APP_URL + shortUrl })
+    res.status(200).json({ shortUrl: process.env.APP_URL + "/" + shortUrl })
 
 }
 
@@ -49,7 +52,7 @@ export const createCustomUrl = async (req, res) => {
     const { url, slug } = req.body
     const shortUrl = await shortUrlServiceNoUser(url, slug)
 
-    res.status(200).json({ shortUrl: process.env.APP_URL + shortUrl })
+    res.status(200).json({ shortUrl: process.env.APP_URL + "/" + shortUrl })
 
 }
 
