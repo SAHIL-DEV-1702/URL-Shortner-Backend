@@ -4,7 +4,11 @@ import cors from 'cors'
 
 import express from 'express'
 const app = express();
-app.use(cors())
+
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true
+}))
 
 import connectDb from './src/config/mongodb.config.js'
 import shortUrl from './src/routes/shortUrl.routes.js'

@@ -6,6 +6,11 @@ export const findByEmail = async (email) => {
 
 }
 
+export const findByEmailAndPassword = async (email) => {
+
+   return await user.findOne({ email }).select('+password');
+
+}
 
 export const findById = async (id) => {
 
