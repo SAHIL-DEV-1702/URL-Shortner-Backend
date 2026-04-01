@@ -4,26 +4,27 @@ import { signToken } from '../utils/helper.js'
 
 
 
-export const registerUser = async (name, email, password) => {
+export const registerUser = async (data) => {
+    const { name, email, password } = data
     const user = await findByEmail(email)
     if (user) throw new Error("user already exist");
 
-    const newUser = await createUser(name, email, password)
-    const token =  signToken({ id: newUser._id })
-    return token
+    const newUser = await createUser({ name, email, password })
+    const token = signToken({ id: newUser._id })
+    return { token }
 }
 
 
-    export const loginUser = async (email, password) => {
-        const user = await findByEmail(email)
+export const loginUser = async (email, password) => {
+    const user = await findByEmail(email)
 
-        if (!user) throw new Error("User not found")
+    if (!user) throw new Error("User not found")
 
-        const isPasswordValid = await user.comparePassword(password)
+    const isPasswordValid = await user.comparePassword(password)
 
-        if (!isPasswordValid) throw new Error("Invalid credentials")
+    if (!isPasswordValid) throw new Error("Invalid credentials")
 
-        const token = signToken({ id: user._id })
+    const token = signToken({ id: user._id })
 
-        return { user, token }
-    }
+    return { user, token }
+}

@@ -14,13 +14,13 @@ export const findByEmailAndPassword = async (email) => {
 
 export const findById = async (id) => {
 
-   return await user.findOne(id);
+   return await user.findById(id);
 
 }
 
-export const createUser = async (name, email, password) => {
+export const createUser = async (data) => {
 
-   const newUser = await user.create({ name: name, email: email, password: password })
+   const newUser = await user.create(data)
    return newUser
 
 }

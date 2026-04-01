@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid'
-import  {cookiesOption}  from '../config/config.js'
+import { cookiesOption } from '../config/config.js'
 import jsonwebtoken from 'jsonwebtoken'
 export const genrateId = (length) => {
 
@@ -20,3 +20,4 @@ export const verifyToken = (token) => {
         return null
     }
 }
+

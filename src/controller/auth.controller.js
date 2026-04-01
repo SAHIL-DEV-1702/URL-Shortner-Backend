@@ -1,3 +1,4 @@
+import e from "express";
 import { cookiesOption } from "../config/config.js";
 import { findByEmail } from "../dao/user.dao.js";
 import { registerUser, loginUser } from "../sevices/auth.service.js";
@@ -33,9 +34,27 @@ export const login_user = async (req, res) => {
 
         req.user = user
         res.cookie("accessToken", token, cookiesOption)
-        res.status(200).json({ user: user, message: "login success" })
+        res.status(200).json({ message: "login success", user: user, token: token })
+
+
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
 
+}
+
+export const logOut_user = async (req, res) => {
+    res.clearCookie("accessToken")
+    res.status(200).json({ message: "logout success" })
+}
+
+
+export const getMe = async (req, res) => {
+    try {
+        const user = req.user
+        res.status(200).json({ user })
+        return data.user
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
 }
