@@ -2,13 +2,13 @@ import { verifyToken } from '../utils/helper.js';
 import { findById } from '../dao/user.dao.js';
 
 export const authMiddleware = async (req, res, next) => {
+
+    const token = req.cookies.accessToken
+
+    if (!token) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
     try {
-        const token = req.cookies.accessToken
-
-        if (!token) {
-            return res.status(401).json({ error: 'No token provided' });
-        }
-
         const decoded = verifyToken(token,);
         const user = await findById(decoded)
 
@@ -18,7 +18,7 @@ export const authMiddleware = async (req, res, next) => {
         next();
 
     } catch (error) {
-        return res.status(401).json({ error: 'Invalid token' });
+        return res.status(401).json({ error, message: 'Unauthorized' });
     }
 
 };
