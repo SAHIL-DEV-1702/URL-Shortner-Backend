@@ -1,6 +1,6 @@
-import e from "express";
+
 import { cookiesOption } from "../config/config.js";
-import { findByEmail } from "../dao/user.dao.js";
+
 import { registerUser, loginUser } from "../sevices/auth.service.js";
 
 
@@ -12,11 +12,11 @@ export const register_user = async (req, res) => {
         const { token, user } = await registerUser({ name, email, password })
         req.user = user
         res.cookie("accessToken", token, cookiesOption)
-        res.status(200).json({ message: "registered success" })
+        return res.status(200).json({ message: "registered success" })
 
     } catch (err) {
         console.log(err)
-        res.status(400).json({ error: err.message })
+        return res.status(400).json({ error: err.message })
     }
 }
 
@@ -34,18 +34,18 @@ export const login_user = async (req, res) => {
 
         req.user = user
         res.cookie("accessToken", token, cookiesOption)
-        res.status(200).json({ message: "login success", user: user, token: token })
+        return res.status(200).json({ message: "login success", user: user, token: token })
 
 
     } catch (error) {
-        res.status(400).json({ error: error.message })
+        return res.status(400).json({ error: error.message })
     }
 
 }
 
 export const logOut_user = async (req, res) => {
     res.clearCookie("accessToken")
-    res.status(200).json({ message: "logout success" })
+    return res.status(200).json({ message: "logout success" })
 }
 
 
@@ -54,10 +54,10 @@ export const getMe = async (req, res) => {
     try {
 
         const user = req.user
-        res.status(200).json({ user: req.user })
-        return data.user
+        return res.status(200).json({ user: req.user })
+
 
     } catch (error) {
-        res.status(400).json({ error: error.message })
+        return res.status(400).json({ error: error.message })
     }
 }
