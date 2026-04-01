@@ -50,10 +50,13 @@ export const logOut_user = async (req, res) => {
 
 
 export const getMe = async (req, res) => {
+
     try {
+
         const user = req.user
-        res.status(200).json({ user })
+        res.status(200).json({ user: req.user })
         return data.user
+
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
