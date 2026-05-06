@@ -4,12 +4,11 @@ const router = express.Router()
 
 
 router.post("/", createShortUrl)
-router.post("/", createShortUrlAuth)
+import { authMiddleware } from '../middleware/auth.middleware.js'
 
-
-
-
+router.post("/auth", authMiddleware, createShortUrlAuth)
 
 
 export default router
 
+    

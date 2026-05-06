@@ -4,7 +4,7 @@ const urlSchema = new mongoose.Schema(
     {
         originalUrl: {
             type: String,
-            required: true
+            required: true,
         },
         short_url: {
             type: String,
@@ -19,13 +19,15 @@ const urlSchema = new mongoose.Schema(
         },
         user: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
-
+            ref: "userModel"
         }
 
     },
     { timestamps: true }
 )
 
-const urlModel = mongoose.model("urlModel", urlSchema)
-export default urlModel
+
+const shortUrlModel = mongoose.models.shortUrlModel
+    || mongoose.model("shortUrlModel", urlSchema)
+
+export default shortUrlModel

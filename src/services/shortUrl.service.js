@@ -18,15 +18,20 @@ export const shortUrlServiceUser = async (url, userId, slug = null) => {
     try {
         const shortUrl = slug || genrateId(7)
         console.log('short', shortUrl)
-        const exists = await getCustomShorturl(slug)
-        if (exists) throw new Error("this custom url already exists")
 
-        await saveShortUrl(shortUrl, url, userId)
+        
+        if (slug) {
+            const exists = await getCustomShorturl(slug)
+            if (exists) {
+                throw new Error("This custom URL already exists")
+            }
+        }
+
+        await saveShortUrl(shortUrl, url, userId, { user: userId, slug }) // Pass slug to saveShortUrl
         return shortUrl
 
     } catch (error) {
         throw new Error(`Error in shortUrlServiceUser: ${error.message}`)
     }
 }
-
 

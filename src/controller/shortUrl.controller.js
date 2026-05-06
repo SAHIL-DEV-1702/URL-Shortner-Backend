@@ -1,23 +1,25 @@
-import { shortUrlServiceNoUser, shortUrlServiceUser } from '../sevices/shortUrl.service.js';
-import urlModel from '../models/shortUrl.model.js';
+import { shortUrlServiceNoUser, shortUrlServiceUser } from '../services/shortUrl.service.js';
+import shortUrlModel from '../models/shorturl.model.js'
 
 
-export const createShortUrl = async (req, res) => {
-
-    const data = req.body;
-
-    console.log(data)
-
-    let shortUrl
-    if (req.user) {
-        shortUrl = await shortUrlServiceUser(data.url, req.user._id, data.slug)
+export const createShortUrl = async (req, res, next) => {
+    try {
+        const data = req.body;
+        console.log(data)
+        let shortUrl
+        if (req.user) {
+            shortUrl = await shortUrlServiceUser(data.url, req.user._id, data.slug)
+        }
+        else {
+            shortUrl = await shortUrlServiceNoUser(data.url)
+        }
+        res.status(200).json({ shortUrl: process.env.APP_URL + "/" + shortUrl })
+    } catch (error) {
+        next(error)
     }
-    else {
-        shortUrl = await shortUrlServiceNoUser(data.url)
-    }
-    res.status(200).json({ shortUrl: process.env.APP_URL + "/" + shortUrl })
-
 }
+
+
 
 export const createShortUrlAuth = async (req, res, next) => {
 
@@ -37,7 +39,7 @@ export const createShortUrlAuth = async (req, res, next) => {
 export const redirectFromShorturl = async (req, res) => {
 
     const { id } = req.params
-    const url = await urlModel.findOne({ short_url: id })
+    const url = await shortUrlModel.findOne({ short_url: id })
     if (url) {
         res.redirect(url.originalUrl)
     }

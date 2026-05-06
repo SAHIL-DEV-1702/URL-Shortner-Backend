@@ -1,26 +1,40 @@
-import user from '../models/user.model.js'
+
+import userModel from "../models/user.model.js";
+import shortUrlModel from "../models/shorturl.model.js";
+
 
 export const findByEmail = async (email) => {
 
-   return await user.findOne({ email });
+   return await userModel.findOne({ email });
 
 }
 
 export const findByEmailAndPassword = async (email) => {
 
-   return await user.findOne({ email }).select('+password');
+   return await userModel.findOne({ email }).select('+password');
 
 }
 
 export const findById = async (id) => {
 
-   return await user.findById(id);
+   return await userModel.findById(id);
 
 }
 
 export const createUser = async (data) => {
 
-   const newUser = await user.create(data)
+   console.log("Creating user with data:", data)
+
+   const newUser = await userModel.create(data)
+
+   console.log("New user created:", newUser)
+
    return newUser
+}
+
+
+export const getUserUrlsDao = async (id) => {
+
+   return await shortUrlModel.find({ user: id })
 
 }

@@ -1,8 +1,8 @@
-import urlModel from '../models/shortUrl.model.js'
+import shortUrlModel from "../models/shorturl.model.js";
 
 export const saveShortUrl = async (short_url, originalUrl, userId) => {
     try {
-        const newUrl = new urlModel({
+        const newUrl = new shortUrlModel({
             short_url: short_url,
             originalUrl: originalUrl,
         });
@@ -20,6 +20,6 @@ export const saveShortUrl = async (short_url, originalUrl, userId) => {
 }
 
 export const getCustomShorturl = async (slug) => {
-    return await urlModel.findOne({ short_url: slug })
+    return await shortUrlModel.findOne({ short_url: slug })
 
 }

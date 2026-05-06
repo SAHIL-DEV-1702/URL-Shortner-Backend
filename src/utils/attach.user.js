@@ -19,7 +19,7 @@ export const attachedUser = async (req, res, next) => {
 
         // console.log("decoded", decoded)  got value here
 
-        const user = await findById(decoded.id)
+        const user = await findById(decoded)
 
         if (!user) return next()
         req.user = user
