@@ -18,7 +18,8 @@ const userSchema = new mongoose.Schema(
         password: {
             type: String,
             required: [true, "password must required"],
-            minlength: [8, "password must be at least 8 characters"]
+            minlength: [8, "password must be at least 8 characters"],
+            select: false
         },
     },
     { timestamps: true }
@@ -30,12 +31,10 @@ userSchema.methods.comparePassword = async function (password) {
 };
 
 
-userSchema.pre("save", async function (next) {
-    if (!this.isModified("password")) return next();
+userSchema.pre("save", async function () {
+    if (!this.isModified("password")) return;
 
     this.password = await bcrypt.hash(this.password, 10);
-
-    next();
 });
 
 export default mongoose.model("userModel", userSchema);

@@ -1,5 +1,5 @@
 
-import { createUser, findByEmail } from '../dao/user.dao.js'
+import { createUser, findByEmail, findByEmailAndPassword } from '../dao/user.dao.js'
 import { signToken } from '../utils/helper.js'
 
 
@@ -22,7 +22,7 @@ export const registerUser = async (name, email, password) => {
 
 export const loginUser = async (email, password) => {
     try {
-        const user = await findByEmail(email)
+        const user = await findByEmailAndPassword(email)
 
         if (!user) return { error: "User not found" }
 

@@ -17,9 +17,12 @@ export const attachedUser = async (req, res, next) => {
 
         const decoded = verifyToken(token)
 
-        // console.log("decoded", decoded)  got value here
+        if (!decoded) return next()
 
-        const user = await findById(decoded)
+        const userId = decoded.id || decoded._id
+        if (!userId) return next()
+
+        const user = await findById(userId)
 
         if (!user) return next()
         req.user = user

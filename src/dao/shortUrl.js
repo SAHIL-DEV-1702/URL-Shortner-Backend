@@ -1,6 +1,6 @@
 import shortUrlModel from "../models/shorturl.model.js";
 
-export const saveShortUrl = async (short_url, originalUrl, userId) => {
+export const saveShortUrl = async (short_url, originalUrl, userId, meta = {}) => {
     try {
         const newUrl = new shortUrlModel({
             short_url: short_url,
@@ -10,6 +10,11 @@ export const saveShortUrl = async (short_url, originalUrl, userId) => {
         if (userId) {
             newUrl.user = userId;
         }
+
+        if (meta.slug) {
+            newUrl.customSlug = meta.slug;
+        }
+
         await newUrl.save();
 
 
