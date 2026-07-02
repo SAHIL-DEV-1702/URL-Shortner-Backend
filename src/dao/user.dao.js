@@ -40,5 +40,5 @@ export const getUserUrlsDao = async (id) => {
 }
 
 export const deleteUserUrlById = async (userId, urlId) => {
-    return await shortUrlModel.findOneAndDelete({ _id: urlId, user: userId })
+   return await shortUrlModel.findOneAndDelete({ _id: urlId, user: userId })
 }
