@@ -37,16 +37,20 @@ export const createShortUrlAuth = async (req, res, next) => {
 }
 
 export const redirectFromShorturl = async (req, res) => {
-
     const { id } = req.params
-    const url = await shortUrlModel.findOne({ short_url: id })
+    const url = await shortUrlModel.findOneAndUpdate(
+        { $or: [{ short_url: id }, { customSlug: id }] },
+        { $inc: { clicks: 1 } },
+        { new: true }
+    )
+
     if (url) {
-        res.redirect(url.originalUrl)
+        console.log(`Redirecting short url ${id}, clicks=${url.clicks}`)
+        return res.redirect(url.originalUrl)
     }
-    else {
-        res.status(404).send('NOT FOUND')
-        console.log('url not found')
-    }
+
+    console.log(`Short url not found: ${id}`)
+    res.status(404).send('NOT FOUND')
 }
 
 export const createCustomUrl = async (req, res) => {
