@@ -35,11 +35,9 @@ app.use(errorHandler)
 const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, () => {
-    try {
-        connectDb()
-    }
-    catch (error) {
-        console.log(error)
-    }
+    connectDb().then(console.log("database connected successfully"))
+        .catch((error) => {
+            console.log(error)
+        })
     console.log(`Server running on ${PORT}`);
 });
