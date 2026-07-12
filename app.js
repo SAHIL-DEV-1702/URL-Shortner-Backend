@@ -32,8 +32,8 @@ app.use('/api/auth', auth_routes)
 app.get('/:id', redirectFromShorturl)
 app.use(errorHandler)
 
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 8000;
+
 app.listen(PORT, () => {
-    connectDb()
-    console.log(`App is listening on port ${PORT}`);
-})
+    console.log(`Server running on ${PORT}`);
+});
