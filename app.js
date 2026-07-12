@@ -6,7 +6,7 @@ import express from 'express'
 const app = express();
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: "https://nano-urls.netlify.app",
     credentials: true
 }))
 
