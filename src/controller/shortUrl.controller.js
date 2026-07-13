@@ -1,11 +1,14 @@
 import { shortUrlServiceNoUser, shortUrlServiceUser } from '../services/shortUrl.service.js';
 import shortUrlModel from '../models/shorturl.model.js'
 
+const getPublicBaseUrl = () => {
+    return process.env.APP_URL?.trim() || process.env.FRONTEND_URL?.trim() || 'https://url-shortner-backend-1-7ems.onrender.com';
+};
 
 export const createShortUrl = async (req, res, next) => {
     try {
         const data = req.body;
-        const baseUrl = process.env.APP_URL || process.env.FRONTEND_URL || 'http://localhost:8000';
+        const baseUrl = getPublicBaseUrl();
         let shortUrl
 
         if (req.user) {
@@ -25,7 +28,7 @@ export const createShortUrl = async (req, res, next) => {
 export const createShortUrlAuth = async (req, res, next) => {
     try {
         const { url, slug } = req.body;
-        const baseUrl = process.env.APP_URL || process.env.FRONTEND_URL || 'http://localhost:8000';
+        const baseUrl = getPublicBaseUrl();
         const shortId = await shortUrlServiceUser(url, req.user._id, slug)
         res.status(200).json({ shortUrl: `${baseUrl}/${shortId}` })
     } catch (error) {
@@ -53,7 +56,7 @@ export const redirectFromShorturl = async (req, res) => {
 export const createCustomUrl = async (req, res, next) => {
     try {
         const { url, slug } = req.body
-        const baseUrl = process.env.APP_URL || process.env.FRONTEND_URL || 'http://localhost:8000';
+        const baseUrl = getPublicBaseUrl();
         const shortUrl = await shortUrlServiceUser(url, req.user._id, slug)
         res.status(200).json({ shortUrl: `${baseUrl}/${shortUrl}` })
     } catch (error) {
