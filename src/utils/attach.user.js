@@ -1,20 +1,12 @@
-
-import { verifyToken } from "../utils/helper.js"
+import { getTokenFromRequest, verifyToken } from "../utils/helper.js"
 import { findById } from "../dao/user.dao.js"
 
-
 export const attachedUser = async (req, res, next) => {
-
-    const token = req.cookies.accessToken
-
-    // console.log("cookies access", req.cookies)
-    // console.log(token, "token");  i got here 
-
+    const token = getTokenFromRequest(req)
 
     if (!token) return next()
 
     try {
-
         const decoded = verifyToken(token)
 
         if (!decoded) return next()
@@ -25,16 +17,11 @@ export const attachedUser = async (req, res, next) => {
         const user = await findById(userId)
 
         if (!user) return next()
+
         req.user = user
-
-        // console.log("user", req.user)   //got value here 
-
         next()
-
-    }
-    catch (error) {
+    } catch (error) {
         console.log(error)
         next()
     }
-
 }
