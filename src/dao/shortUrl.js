@@ -25,6 +25,7 @@ export const saveShortUrl = async (short_url, originalUrl, userId, meta = {}) =>
 }
 
 export const getCustomShorturl = async (slug) => {
-    return await shortUrlModel.findOne({ short_url: slug })
-
+    return await shortUrlModel.findOne({
+        $or: [{ short_url: slug }, { customSlug: slug }]
+    })
 }

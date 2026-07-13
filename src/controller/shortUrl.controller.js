@@ -5,15 +5,16 @@ import shortUrlModel from '../models/shorturl.model.js'
 export const createShortUrl = async (req, res, next) => {
     try {
         const data = req.body;
-        console.log(data)
+        const baseUrl = process.env.APP_URL || process.env.FRONTEND_URL || 'http://localhost:8000';
         let shortUrl
+
         if (req.user) {
             shortUrl = await shortUrlServiceUser(data.url, req.user._id, data.slug)
-        }
-        else {
+        } else {
             shortUrl = await shortUrlServiceNoUser(data.url)
         }
-        res.status(200).json({ shortUrl: process.env.APP_URL + "/" + shortUrl })
+
+        res.status(200).json({ shortUrl: `${baseUrl}/${shortUrl}` })
     } catch (error) {
         next(error)
     }
@@ -22,15 +23,11 @@ export const createShortUrl = async (req, res, next) => {
 
 
 export const createShortUrlAuth = async (req, res, next) => {
-
     try {
-        const { url } = req.body;
-
-        console.log("req.user from 20 shortcontroller", req.user)
-
-        const shortId = await shortUrlServiceUser(url, req.user._id)
-        res.send(process.env.APP_URL + "/" + shortId)
-
+        const { url, slug } = req.body;
+        const baseUrl = process.env.APP_URL || process.env.FRONTEND_URL || 'http://localhost:8000';
+        const shortId = await shortUrlServiceUser(url, req.user._id, slug)
+        res.status(200).json({ shortUrl: `${baseUrl}/${shortId}` })
     } catch (error) {
         next(error)
     }
@@ -53,13 +50,15 @@ export const redirectFromShorturl = async (req, res) => {
     res.status(404).send('NOT FOUND')
 }
 
-export const createCustomUrl = async (req, res) => {
-
-    const { url, slug } = req.body
-    const shortUrl = await shortUrlServiceUser(url, req.user._id, slug)
-
-    res.status(200).json({ shortUrl: process.env.APP_URL + "/" + shortUrl })
-
+export const createCustomUrl = async (req, res, next) => {
+    try {
+        const { url, slug } = req.body
+        const baseUrl = process.env.APP_URL || process.env.FRONTEND_URL || 'http://localhost:8000';
+        const shortUrl = await shortUrlServiceUser(url, req.user._id, slug)
+        res.status(200).json({ shortUrl: `${baseUrl}/${shortUrl}` })
+    } catch (error) {
+        next(error)
+    }
 }
 
 
