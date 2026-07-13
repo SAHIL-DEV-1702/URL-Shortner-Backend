@@ -26,7 +26,11 @@ export const shortUrlServiceUser = async (url, userId, slug = null) => {
             }
         }
 
-        await saveShortUrl(shortUrl, url, userId, { user: userId, slug: normalizedSlug })
+        const saved = await saveShortUrl(shortUrl, url, userId, { user: userId, slug: normalizedSlug })
+        if (normalizedSlug && !saved.customSlug) {
+            saved.customSlug = normalizedSlug;
+            await saved.save();
+        }
         return shortUrl
 
     } catch (error) {

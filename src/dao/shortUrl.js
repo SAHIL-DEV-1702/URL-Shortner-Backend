@@ -15,9 +15,8 @@ export const saveShortUrl = async (short_url, originalUrl, userId, meta = {}) =>
             newUrl.customSlug = meta.slug;
         }
 
-        await newUrl.save();
-
-
+        const savedUrl = await newUrl.save();
+        return savedUrl;
     } catch (error) {
         console.error('Error saving short URL:', error);
         throw error;
