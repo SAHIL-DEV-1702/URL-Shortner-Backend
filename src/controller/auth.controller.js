@@ -9,11 +9,11 @@ export const register_user = async (req, res) => {
     try {
         const { name, email, password } = req.body;
 
-        const { token, user } = await registerUser( name, email, password );
+        const { token, user } = await registerUser(name, email, password);
 
         console.log(user, token, "user print register");
 
-       
+
         res.cookie("accessToken", token, cookiesOption);
 
         return res.status(201).json({
@@ -56,8 +56,8 @@ export const login_user = async (req, res) => {
 export const logOut_user = async (req, res) => {
     res.clearCookie("accessToken", {
         httpOnly: true,
-        sameSite: "lax",
-        secure: false,
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+        secure: process.env.NODE_ENV === 'production',
     })
 
     return res.status(200).json({ message: "logout success" })
